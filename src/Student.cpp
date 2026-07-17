@@ -73,7 +73,6 @@ const std::optional<std::string> &Student::get_phone() const
 }
 
 // Setters implementations
-
 void Student::set_first_name(std::string first_name)
 {
     if (first_name.length() < 3)

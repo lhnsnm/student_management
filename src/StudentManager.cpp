@@ -26,6 +26,11 @@ int StudentManager::size()
     return student_count;
 }
 
+int StudentManager::hash(int key)
+{
+    return key % students.size();
+}
+
 // Constructors
 
 StudentManager::~StudentManager()

@@ -23,10 +23,7 @@ private:
 
     int student_count{0};
 
-    int hash(int key)
-    {
-        return key % students.size();
-    }
+    int hash(int key);
 
     void clear();
 

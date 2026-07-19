@@ -25,10 +25,10 @@ SRCS = $(wildcard src/*.cpp)
 all: run_cmake
 
 cmake_debug:
-	${CMAKE} -B ${BUILD_DIR} -S . ${CMAKE_DEBUG} && cmake --build ${BUILD_DIR}
+	${CMAKE} -B ${BUILD_DIR} -S . ${CMAKE_DEBUG} && cmake --build ${BUILD_DIR} --clean-first --verbose
 
 cmake_release:
-	${CMAKE} -B ${BUILD_DIR} -S . ${CMAKE_RELEASE} && cmake --build ${BUILD_DIR}
+	${CMAKE} -B ${BUILD_DIR} -S . ${CMAKE_RELEASE} && cmake --build ${BUILD_DIR} --clean-first
 
 run_cmake: cmake_debug
 	./${BUILD_DIR}/${APP}

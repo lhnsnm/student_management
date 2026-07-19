@@ -1,4 +1,10 @@
-NOTES.md
-vcpkg/
-vcpkg_packages/
+# Ignore the local build artifacts
 build/
+vcpkg_installed/
+vcpkg/
+
+# Ignore personal VS Code workspace state, but keep shared configurations
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/settings.json

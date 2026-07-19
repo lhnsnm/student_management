@@ -27,8 +27,8 @@ void capitalize_name(std::string &name)
 Student::Student(
     const std::string &first_name,
     const std::string &last_name)
-    : m_first_name{std::move(first_name)},
-      m_last_name{std::move(last_name)},
+    : m_first_name{first_name},
+      m_last_name{last_name},
       m_year_level{1}
 {
     m_id = get_uuid_string();
@@ -93,7 +93,7 @@ void Student::set_last_name(std::string last_name)
 
 void Student::set_year_level(int year_level)
 {
-    m_year_level = std::move(year_level);
+    m_year_level = year_level;
 }
 
 void Student::set_email(std::string email)

@@ -1,0 +1,5 @@
+{
+  "name": "my-uuid-project",
+  "version-string": "1.0.0",
+  "dependencies": ["boost-uuid"]
+}

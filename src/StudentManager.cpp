@@ -57,6 +57,7 @@ StudentManager::StudentManager(const StudentManager &other)
             }
 
             tail = copy;
+            student_count++;
             curr = curr->next;
         }
     }
@@ -68,6 +69,7 @@ StudentManager &StudentManager::operator=(const StudentManager &other)
     {
         StudentManager temp(other);
         std::swap(students, temp.students);
+        std::swap(student_count, temp.student_count);
     }
 
     return *this;
@@ -77,6 +79,7 @@ StudentManager::StudentManager(StudentManager &&other) noexcept
     : students(std::move(other.students))
 {
     other.students.assign(1000, nullptr);
+    other.student_count = 0;
 }
 
 StudentManager &StudentManager::operator=(StudentManager &&other) noexcept
@@ -86,6 +89,7 @@ StudentManager &StudentManager::operator=(StudentManager &&other) noexcept
         clear();
         students = std::move(other.students);
         other.students.assign(1000, nullptr);
+        other.student_count = 0;
     }
 
     return *this;

@@ -1,0 +1,41 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "(gdb) Launch Student Management",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/student_management",
+      "linux": {
+        "program": "${workspaceFolder}/build/student_management",
+        "MIMode": "gdb",
+        "miDebuggerPath": "/usr/bin/gdb"
+      },
+      "osx": {
+        "program": "${workspaceFolder}/build/student_management",
+        "MIMode": "lldb" // Mac targets utilize LLDB natively instead of GDB
+      },
+      "windows": {
+        "program": "${workspaceFolder}/build/student_management.exe",
+        "MIMode": "gdb"
+      },
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+
+      "externalConsole": false,
+
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+
+      // Maps directly to the new "CMake: build" label in your tasks.json
+      "preLaunchTask": "CMake: build"
+    }
+  ]
+}

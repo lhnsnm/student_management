@@ -1,0 +1,9 @@
+{
+  "cmake.sourceDirectory": "${workspaceFolder}",
+  "cmake.buildDirectory": "${workspaceFolder}/build",
+  "cmake.configureArgs": [
+    "-DCMAKE_TOOLCHAIN_FILE=${workspaceFolder}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+  ],
+  "cmake.configureOnOpen": true,
+  "cmake.buildBeforeRun": true
+}

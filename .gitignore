@@ -1,1 +1,4 @@
-build
+NOTES.md
+vcpkg/
+vcpkg_packages/
+build/

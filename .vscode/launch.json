@@ -22,11 +22,27 @@
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
-      "environment": [],
+      "environment": [
+        {
+          "name": "DEBUGINFOD_URLS",
+          "value": ""
+        }
+      ],
 
       "externalConsole": false,
+      "console": "integratedTerminal",
 
       "setupCommands": [
+        {
+          "description": "Disable automatic debug symbol downloads",
+          "text": "-gdb-set debuginfod enabled off",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Wipe debuginfod URLs to bypass extension bug",
+          "text": "set debuginfod urls ",
+          "ignoreFailures": true
+        },
         {
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",

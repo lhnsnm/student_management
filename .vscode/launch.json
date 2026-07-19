@@ -30,7 +30,6 @@
       ],
 
       "externalConsole": false,
-      "console": "integratedTerminal",
 
       "setupCommands": [
         {

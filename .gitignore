@@ -8,3 +8,5 @@ vcpkg/
 !.vscode/launch.json
 !.vscode/tasks.json
 !.vscode/settings.json
+
+compile_command.json

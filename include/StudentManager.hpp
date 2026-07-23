@@ -2,6 +2,7 @@
 #define STUDENT_MANAGER_HPP
 
 #include "Student.hpp"
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -20,7 +21,7 @@ private:
 
   int student_count{0};
 
-  int hash(int key);
+  int hash(const int &key);
 
   void clear();
 
@@ -33,11 +34,17 @@ public:
   StudentManager(StudentManager &&other) noexcept;
   StudentManager &operator=(StudentManager &&other) noexcept;
 
-  void put(const Student &student, const int key);
-  void remove(int key);
-  Student get(int key);
-  void print();
-  int size();
+  void update(const std::string &student_id, const Student &student);
+
+  void put(const Student &student, const int &key);
+  void remove(const int &key);
+  void remove(const std::string &sid);
+  Student get(const int &key);
+  std::vector<StudentNode *> &get_students();
+  Student get(const std::string &student_id);
+  void print() const;
+  void print(std::string &student_id) const;
+  const int &size() const;
 };
 
 #endif

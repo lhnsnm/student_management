@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <iostream>
 #include <stdexcept>
+#include <string>
 #include <utility>
 
 // Helpers
@@ -18,9 +19,9 @@ void StudentManager::clear() {
   }
 }
 
-int StudentManager::size() { return student_count; }
+const int &StudentManager::size() const { return student_count; }
 
-int StudentManager::hash(int key) { return key % students.size(); }
+int StudentManager::hash(const int &key) { return key % students.size(); }
 
 // Constructors
 
@@ -79,7 +80,7 @@ StudentManager &StudentManager::operator=(StudentManager &&other) noexcept {
 
 // Methods
 
-void StudentManager::put(const Student &student, const int key) {
+void StudentManager::put(const Student &student, const int &key) {
   int hkey = hash(key);
   StudentNode *curr = students[hkey];
 
@@ -98,7 +99,7 @@ void StudentManager::put(const Student &student, const int key) {
   student_count++;
 }
 
-void StudentManager::remove(int key) {
+void StudentManager::remove(const int &key) {
   int hkey = hash(key);
 
   StudentNode *prev = nullptr, *curr = students[hkey];
@@ -112,16 +113,42 @@ void StudentManager::remove(int key) {
       }
 
       delete curr;
+      student_count--;  // FIX: Only decrement count when student is actually removed
       return;
     }
 
     prev = curr;
     curr = curr->next;
   }
-  student_count--;
 }
 
-Student StudentManager::get(int key) {
+void StudentManager::remove(const std::string &sid) {
+  for (size_t i = 0; i < students.size(); i++) {  // FIX: Iterate all hash table buckets, not just up to student_count
+    StudentNode *curr = students[i];
+    StudentNode *prev = nullptr;
+
+    while (curr) {
+      if (curr->student.get_id() == sid) {
+        if (prev) {
+          prev->next = curr->next;
+        } else {
+          students[i] = curr->next;  // FIX: Use correct bucket index instead of unused hkey
+        }
+
+        delete curr;
+        student_count--;  // FIX: Only decrement count when student is actually removed
+        return;
+      }
+
+      prev = curr;
+      curr = curr->next;
+    }
+  }
+}
+
+std::vector<StudentNode *> &StudentManager::get_students() { return students; }
+
+Student StudentManager::get(const int &key) {
   int hkey = hash(key);
 
   StudentNode *curr = students[hkey];
@@ -137,7 +164,21 @@ Student StudentManager::get(int key) {
   throw std::runtime_error("Student not found");
 }
 
-void StudentManager::print() {
+Student StudentManager::get(const std::string &student_id) {
+  for (StudentNode *curr : students) {  // FIX: Use value copy to avoid mutating bucket pointers via reference
+    while (curr) {
+      if (curr->student.get_id() == student_id) {
+        return curr->student;
+      }
+
+      curr = curr->next;
+    }
+  }
+
+  throw std::runtime_error("Student not found");
+}
+
+void StudentManager::print() const {
   // Set headers with a fixed 12-character width
   std::cout << std::left << std::setw(40) << "ID" << std::setw(20)
             << "First Name"
@@ -158,4 +199,45 @@ void StudentManager::print() {
       curr = curr->next;
     }
   }
+}
+
+void StudentManager::print(std::string &student_id) const {
+  // Set headers with a fixed 12-character width
+  std::cout << std::left << std::setw(40) << "ID" << std::setw(20)
+            << "First Name"
+            << "Last Name" << std::endl;
+
+  for (size_t i = 0; i < students.size(); i++) {
+    StudentNode *curr = students[i];
+
+    while (curr) {
+      std::string id = curr->student.get_id();
+      std::string fname = curr->student.get_first_name();
+      std::string lname = curr->student.get_last_name();
+
+      if (id == student_id) {
+        // Print in neat, aligned columns
+        std::cout << std::left << std::setw(40) << id << std::setw(20) << fname
+                  << lname << std::endl;
+      }
+      curr = curr->next;
+    }
+  }
+}
+
+void StudentManager::update(const std::string &student_id, const Student &student) {
+  for (auto &bucket : students) {
+    StudentNode *curr = bucket;
+
+    while (curr) {
+      if (curr->student.get_id() == student_id) {
+        curr->student = student;
+        return;
+      }
+
+      curr = curr->next;
+    }
+  }
+
+  throw std::runtime_error("Student not found");
 }

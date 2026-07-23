@@ -1,0 +1,8 @@
+**/node_modules/**
+**/.next/**
+**/build/**
+**/dist/**
+**/.git/**
+*.log
+*.mp4
+*.zip

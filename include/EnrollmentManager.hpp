@@ -15,7 +15,7 @@ public:
   const std::vector<Enrollment> &get_enrollments() const;
 
   void add_enrollment(Enrollment enrollment);
-  void update_enrollment(const std::string &enrollment_id);
+  void update_enrollment(const std::string &enrollment_id, const Enrollment &enrollment);
   void delete_enrollment(const std::string &enrollment_id);
 };
 

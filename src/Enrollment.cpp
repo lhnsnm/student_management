@@ -9,8 +9,9 @@ Enrollment::Enrollment(std::string student_id, std::string subject_code)
   m_id = get_uuid_string();
 }
 
+const std::string &Enrollment::id() const { return m_id; }
+
 const std::string &Enrollment::student_id() const {
-  // FIX: Return student ID, not enrollment UUID
   return m_student_id;
 }
 
@@ -19,7 +20,6 @@ const std::string &Enrollment::subject_code() const { return m_subject_code; }
 void Enrollment::set_student_id(std::string id) {
   if (!id.length())
     return;
-  // FIX: Assign to student ID member, not enrollment ID
   m_student_id = std::move(id);
 }
 

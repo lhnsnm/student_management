@@ -12,6 +12,7 @@ private:
 public:
   Enrollment(std::string student_id, std::string subject_code);
 
+  const std::string &id() const;
   const std::string &student_id() const;
   const std::string &subject_code() const;
 

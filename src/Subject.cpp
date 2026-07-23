@@ -11,6 +11,10 @@ const std::string &Subject::id() const { return m_id; };
 
 const std::string &Subject::code() const { return m_code; };
 
+const std::string &Subject::title() const { return m_title; };
+
+const int &Subject::units() const { return m_units; }
+
 void Subject::set_code(std::string code) {
   if (code.length() < 2)
     return;
@@ -22,3 +26,5 @@ void Subject::set_title(std::string title) {
     return;
   m_title = std::move(title);
 };
+
+void Subject::set_units(int units) { m_units = std::move(units); }

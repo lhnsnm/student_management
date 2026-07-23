@@ -15,8 +15,9 @@ public:
   const std::vector<Subject> &get_subjects() const;
 
   void add_subject(Subject s);
-  void update_enrollment(const std::string &s_id);
-  void delete_enrollment(const std::string &s_id);
+  void update_subject(const std::string &s_id, const Subject &subject);
+  void delete_subject(const std::string &s_id);
+  void load_from_file(const std::string &path);
 };
 
 #endif

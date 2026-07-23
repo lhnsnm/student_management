@@ -8,6 +8,7 @@ private:
   std::string m_id;
   std::string m_code;
   std::string m_title;
+  int m_units{3};
 
 public:
   Subject(std::string code, std::string title);
@@ -16,10 +17,12 @@ public:
   const std::string &id() const;
   const std::string &code() const;
   const std::string &title() const;
+  const int &units() const;
 
   // Setters
   void set_code(std::string code);
   void set_title(std::string title);
+  void set_units(int units);
 };
 
 #endif

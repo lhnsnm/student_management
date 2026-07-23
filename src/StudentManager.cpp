@@ -113,7 +113,8 @@ void StudentManager::remove(const int &key) {
       }
 
       delete curr;
-      student_count--;  // FIX: Only decrement count when student is actually removed
+      student_count--; // FIX: Only decrement count when student is actually
+                       // removed
       return;
     }
 
@@ -123,7 +124,9 @@ void StudentManager::remove(const int &key) {
 }
 
 void StudentManager::remove(const std::string &sid) {
-  for (size_t i = 0; i < students.size(); i++) {  // FIX: Iterate all hash table buckets, not just up to student_count
+  for (size_t i = 0; i < students.size();
+       i++) { // FIX: Iterate all hash table buckets, not just up to
+              // student_count
     StudentNode *curr = students[i];
     StudentNode *prev = nullptr;
 
@@ -132,11 +135,13 @@ void StudentManager::remove(const std::string &sid) {
         if (prev) {
           prev->next = curr->next;
         } else {
-          students[i] = curr->next;  // FIX: Use correct bucket index instead of unused hkey
+          students[i] = curr->next; // FIX: Use correct bucket index instead of
+                                    // unused hkey
         }
 
         delete curr;
-        student_count--;  // FIX: Only decrement count when student is actually removed
+        student_count--; // FIX: Only decrement count when student is actually
+                         // removed
         return;
       }
 
@@ -147,6 +152,9 @@ void StudentManager::remove(const std::string &sid) {
 }
 
 std::vector<StudentNode *> &StudentManager::get_students() { return students; }
+const std::vector<StudentNode *> &StudentManager::get_students() const {
+  return students;
+}
 
 Student StudentManager::get(const int &key) {
   int hkey = hash(key);
@@ -165,7 +173,8 @@ Student StudentManager::get(const int &key) {
 }
 
 Student StudentManager::get(const std::string &student_id) {
-  for (StudentNode *curr : students) {  // FIX: Use value copy to avoid mutating bucket pointers via reference
+  for (StudentNode *curr : students) { // FIX: Use value copy to avoid mutating
+                                       // bucket pointers via reference
     while (curr) {
       if (curr->student.get_id() == student_id) {
         return curr->student;
@@ -225,7 +234,8 @@ void StudentManager::print(std::string &student_id) const {
   }
 }
 
-void StudentManager::update(const std::string &student_id, const Student &student) {
+void StudentManager::update(const std::string &student_id,
+                            const Student &student) {
   for (auto &bucket : students) {
     StudentNode *curr = bucket;
 

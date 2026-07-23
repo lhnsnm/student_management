@@ -41,6 +41,7 @@ public:
   void remove(const std::string &sid);
   Student get(const int &key);
   std::vector<StudentNode *> &get_students();
+  const std::vector<StudentNode *> &get_students() const;
   Student get(const std::string &student_id);
   void print() const;
   void print(std::string &student_id) const;

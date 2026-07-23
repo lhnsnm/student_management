@@ -9,4 +9,4 @@ vcpkg/
 !.vscode/tasks.json
 !.vscode/settings.json
 
-compile_command.json
+compile_commands.json

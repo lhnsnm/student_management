@@ -1,4 +1,5 @@
 #include "Student.hpp"
+#include "uuid.hpp"
 #include "validation_contact.hpp"
 #include <algorithm> // Required for std::transform
 #include <cctype>
@@ -46,16 +47,20 @@ const std::optional<std::string> &Student::get_phone() const { return m_phone; }
 
 // Setters implementations
 void Student::set_first_name(std::string first_name) {
-  if (first_name.length() < 3)
+  if (first_name.length() < 3) {
+    std::cerr << "Error: First name must be at least 3 characters\n";
     return;
+  }
 
   capitalize_name(first_name);
   m_first_name = std::move(first_name);
 }
 
 void Student::set_last_name(std::string last_name) {
-  if (last_name.length() < 3)
+  if (last_name.length() < 3) {
+    std::cerr << "Error: Last name must be at least 3 characters\n";
     return;
+  }
 
   capitalize_name(last_name);
   m_last_name = std::move(last_name);

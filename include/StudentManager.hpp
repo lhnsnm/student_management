@@ -37,8 +37,8 @@ public:
   void update(const std::string &student_id, const Student &student);
 
   void put(const Student &student, const int &key);
-  void remove(const int &key);
-  void remove(const std::string &sid);
+  bool remove(const int &key);
+  bool remove(const std::string &sid);
   Student get(const int &key);
   std::vector<StudentNode *> &get_students();
   const std::vector<StudentNode *> &get_students() const;

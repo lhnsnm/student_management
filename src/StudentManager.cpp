@@ -99,7 +99,7 @@ void StudentManager::put(const Student &student, const int &key) {
   student_count++;
 }
 
-void StudentManager::remove(const int &key) {
+bool StudentManager::remove(const int &key) {
   int hkey = hash(key);
 
   StudentNode *prev = nullptr, *curr = students[hkey];
@@ -115,15 +115,17 @@ void StudentManager::remove(const int &key) {
       delete curr;
       student_count--; // FIX: Only decrement count when student is actually
                        // removed
-      return;
+      return true;
     }
 
     prev = curr;
     curr = curr->next;
   }
+
+  return false;
 }
 
-void StudentManager::remove(const std::string &sid) {
+bool StudentManager::remove(const std::string &sid) {
   for (size_t i = 0; i < students.size();
        i++) { // FIX: Iterate all hash table buckets, not just up to
               // student_count
@@ -142,13 +144,15 @@ void StudentManager::remove(const std::string &sid) {
         delete curr;
         student_count--; // FIX: Only decrement count when student is actually
                          // removed
-        return;
+        return true;
       }
 
       prev = curr;
       curr = curr->next;
     }
   }
+
+  return false;
 }
 
 std::vector<StudentNode *> &StudentManager::get_students() { return students; }

@@ -12,6 +12,10 @@
 #include "StudentManager.hpp"
 #include "SubjectManager.hpp"
 
+// Manage Students
+void run_student_option(StudentManager &student_manager,
+                        EnrollmentManager &enrollment_manager,
+                        SubjectManager &subject_manager, int &key_id);
 bool add_student(StudentManager &sm, int &key);
 void view_students(const StudentManager &sm);
 void search_student(const StudentManager &sm);
@@ -19,6 +23,7 @@ bool delete_student(StudentManager &sm);
 bool update_student(StudentManager &sm);
 bool enroll_student(EnrollmentManager &em, SubjectManager &sm);
 
+// Helper
 std::string to_lowercase(const std::string &str) {
   std::string result = str;
   std::transform(result.begin(), result.end(), result.begin(),
@@ -36,7 +41,32 @@ int main() {
   int key_id = 1;
 
   while (1) {
-    std::cout << "Student Management Program\n"
+    std::cout << "Student Management\n"
+              << "(1) Manage Students\n"
+              << "(-1) To exit\n"
+              << "Select option: ";
+
+    int option;
+    std::cin >> option;
+
+    if (option == -1)
+      goto end_loop;
+
+    if (option == 1)
+      run_student_option(student_manager, enrollment_manager, subject_manager,
+                         key_id);
+  }
+
+end_loop:
+
+  return 0;
+}
+
+void run_student_option(StudentManager &student_manager,
+                        EnrollmentManager &enrollment_manager,
+                        SubjectManager &subject_manager, int &key_id) {
+  while (1) {
+    std::cout << "Manage Students\n"
               << "(1) Add student\n"
               << "(2) View students\n"
               << "(3) Delete student\n"
@@ -82,8 +112,7 @@ int main() {
   }
 
 end_loop:
-
-  return 0;
+  return;
 }
 
 bool add_student(StudentManager &sm, int &key) {

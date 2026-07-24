@@ -27,4 +27,4 @@ void Subject::set_title(std::string title) {
   m_title = std::move(title);
 };
 
-void Subject::set_units(int units) { m_units = std::move(units); }
+void Subject::set_units(int units) { m_units = units; }

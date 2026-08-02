@@ -2,6 +2,7 @@
 build/
 vcpkg_installed/
 vcpkg/
+.cache
 
 # Ignore personal VS Code workspace state, but keep shared configurations
 .vscode/*

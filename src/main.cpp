@@ -24,14 +24,17 @@ bool update_student(StudentManager &sm);
 bool enroll_student(EnrollmentManager &em, SubjectManager &sm);
 
 // Helper
-std::string to_lowercase(const std::string &str) {
+std::string to_lowercase(const std::string &str)
+{
   std::string result = str;
   std::transform(result.begin(), result.end(), result.begin(),
-                 [](unsigned char c) { return std::tolower(c); });
+                 [](unsigned char c)
+                 { return std::tolower(c); });
   return result;
 }
 
-int main() {
+int main()
+{
   StudentManager student_manager;
   SubjectManager subject_manager;
   EnrollmentManager enrollment_manager;
@@ -40,7 +43,8 @@ int main() {
 
   int key_id = 1;
 
-  while (1) {
+  while (1)
+  {
     std::cout << "Student Management\n"
               << "(1) Manage Students\n"
               << "(-1) To exit\n"
@@ -64,8 +68,10 @@ end_loop:
 
 void run_student_option(StudentManager &student_manager,
                         EnrollmentManager &enrollment_manager,
-                        SubjectManager &subject_manager, int &key_id) {
-  while (1) {
+                        SubjectManager &subject_manager, int &key_id)
+{
+  while (1)
+  {
     std::cout << "Manage Students\n"
               << "(1) Add student\n"
               << "(2) View students\n"
@@ -82,31 +88,40 @@ void run_student_option(StudentManager &student_manager,
     if (option == -1)
       goto end_loop;
 
-    if (option == 1) {
-      if (!add_student(student_manager, key_id)) {
+    if (option == 1)
+    {
+      if (!add_student(student_manager, key_id))
+      {
         continue; // FIX: Do not quit the menu on add failure, just continue
                   // loop
       }
       key_id++;
     }
 
-    if (option == 2) {
+    if (option == 2)
+    {
       view_students(student_manager);
     }
 
-    if (option == 3) {
+    if (option == 3)
+    {
+      view_students(student_manager);
       delete_student(student_manager);
     }
 
-    if (option == 4) {
+    if (option == 4)
+    {
+      view_students(student_manager);
       update_student(student_manager);
     }
 
-    if (option == 5) {
+    if (option == 5)
+    {
       search_student(student_manager);
     }
 
-    if (option == 6) {
+    if (option == 6)
+    {
       enroll_student(enrollment_manager, subject_manager);
     }
   }
@@ -115,8 +130,10 @@ end_loop:
   return;
 }
 
-bool add_student(StudentManager &sm, int &key) {
-  try {
+bool add_student(StudentManager &sm, int &key)
+{
+  try
+  {
     std::string fname, lname;
     int year;
     std::cout << "Add student\n"
@@ -127,7 +144,8 @@ bool add_student(StudentManager &sm, int &key) {
     std::cin >> lname;
 
     std::cout << "Enter year level: ";
-    while (!(std::cin >> year)) {
+    while (!(std::cin >> year))
+    {
       std::cin.clear();
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
       std::cout << "Invalid input. Enter year level: ";
@@ -136,10 +154,14 @@ bool add_student(StudentManager &sm, int &key) {
     Student s(std::move(fname), std::move(lname));
     s.set_year_level(std::move(year));
     sm.put(s, key);
-  } catch (const std::runtime_error &e) {
+  }
+  catch (const std::runtime_error &e)
+  {
     std::cerr << "Caught an exception: " << e.what() << std::endl;
     return false;
-  } catch (const std::exception &e) {
+  }
+  catch (const std::exception &e)
+  {
     std::cerr << "Caught standard exception: " << e.what() << std::endl;
     return false;
   }
@@ -147,7 +169,8 @@ bool add_student(StudentManager &sm, int &key) {
   return true;
 }
 
-void view_students(const StudentManager &sm) {
+void view_students(const StudentManager &sm)
+{
   std::cout << "View students" << std::endl;
   sm.print();
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
@@ -155,7 +178,8 @@ void view_students(const StudentManager &sm) {
   std::cin.get();        // Wait for user keystroke
 }
 
-void search_student(const StudentManager &sm) {
+void search_student(const StudentManager &sm)
+{
   std::vector<StudentNode *> result;
   std::string input;
   std::cout << "Search student: " << std::endl;
@@ -166,20 +190,24 @@ void search_student(const StudentManager &sm) {
 
   std::copy_if(
       sm.get_students().begin(), sm.get_students().end(),
-      std::back_inserter(result), [&lowered_input](StudentNode *node) {
+      std::back_inserter(result), [&lowered_input](StudentNode *node)
+      {
         if (!node)
           return false;
         return to_lowercase(node->student.get_name()) == lowered_input ||
                to_lowercase(node->student.get_first_name()) == lowered_input ||
-               to_lowercase(node->student.get_last_name()) == lowered_input;
-      });
+               to_lowercase(node->student.get_last_name()) == lowered_input; });
 
-  if (result.empty()) {
+  if (result.empty())
+  {
     std::cout << "No students found." << std::endl;
-  } else {
+  }
+  else
+  {
     std::cout << std::left << std::setw(40) << "ID" << std::setw(20)
               << "First Name" << "Last Name" << std::endl;
-    for (const StudentNode *node : result) {
+    for (const StudentNode *node : result)
+    {
       std::cout << std::left << std::setw(40) << node->student.get_id()
                 << std::setw(20) << node->student.get_first_name()
                 << node->student.get_last_name() << std::endl;
@@ -189,21 +217,25 @@ void search_student(const StudentManager &sm) {
   std::cin.get();
 }
 
-bool delete_student(StudentManager &sm) {
+bool delete_student(StudentManager &sm)
+{
   std::cout << "Delete student" << std::endl;
   std::string sid;
   std::cout << "Enter the id of the student: ";
   std::cin >> sid;
 
-  if (!sm.remove(sid)) {
+  if (!sm.remove(sid))
+  {
     std::cerr << "Cannot delete student" << std::endl;
     return false;
   };
   return true;
 }
 
-bool update_student(StudentManager &sm) {
-  try {
+bool update_student(StudentManager &sm)
+{
+  try
+  {
     std::cout << "Update student" << std::endl;
     std::string sid;
     std::cout << "Enter the id of the student: ";
@@ -221,7 +253,8 @@ bool update_student(StudentManager &sm) {
 
     std::cout << "Enter new year level: ";
     int year;
-    while (!(std::cin >> year)) {
+    while (!(std::cin >> year))
+    {
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
       std::cout << "Invalid input. Enter new year level: ";
     }
@@ -233,29 +266,37 @@ bool update_student(StudentManager &sm) {
     sm.update(sid, s);
 
     return true;
-  } catch (const std::runtime_error &e) {
+  }
+  catch (const std::runtime_error &e)
+  {
     std::cerr << "Caught an exception: " << e.what() << std::endl;
     return false;
-  } catch (const std::exception &e) {
+  }
+  catch (const std::exception &e)
+  {
     std::cerr << "Caught standard exception: " << e.what() << std::endl;
     return false;
   }
 }
 
-bool enroll_student(EnrollmentManager &em, SubjectManager &sm) {
-  try {
+bool enroll_student(EnrollmentManager &em, SubjectManager &sm)
+{
+  try
+  {
     std::cout << "Enroll student" << std::endl;
     std::string sid;
     std::cout << "Enter student ID: ";
     std::cin >> sid;
 
-    if (sm.get_subjects().empty()) {
+    if (sm.get_subjects().empty())
+    {
       std::cerr << "No subjects available" << std::endl;
       return false;
     }
 
     std::cout << "Available subjects:" << std::endl;
-    for (const auto &subject : sm.get_subjects()) {
+    for (const auto &subject : sm.get_subjects())
+    {
       std::cout << "  " << subject.code() << " - " << subject.title() << " ("
                 << subject.units() << " units)" << std::endl;
     }
@@ -267,7 +308,9 @@ bool enroll_student(EnrollmentManager &em, SubjectManager &sm) {
     em.add_enrollment(Enrollment(sid, code));
     std::cout << "Enrollment successful" << std::endl;
     return true;
-  } catch (const std::exception &e) {
+  }
+  catch (const std::exception &e)
+  {
     std::cerr << e.what() << std::endl;
     return false;
   }
